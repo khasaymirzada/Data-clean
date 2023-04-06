@@ -1,0 +1,38 @@
+data=read.csv("data - Sheet1.csv",header = F)
+data$V1=gsub("__","",data$V1)
+data$V1=gsub("_","",data$V1)
+data$V1=gsub(" ","",data$V1)
+
+data$time=substr(data$V1,1,4)
+data$time=gsub("[0-9]$","",data$time)
+data$time=gsub("T$","",data$time)
+data$time=gsub("F$","",data$time)
+data$time=gsub("S$","",data$time)
+data$time=gsub("W$","",data$time)
+data$time=gsub("MM$","M",data$time)
+
+data$V1=gsub("^[0-9]","",data$V1)
+data$V1=gsub("^[0-9]","",data$V1)
+data$V1=gsub("^[A-z]","",data$V1)
+
+data$V1=gsub("rd","",data$V1)
+data$V1=gsub("st","",data$V1)
+data$V1=gsub("nd","",data$V1)
+data$V1=gsub("th","",data$V1)
+
+data$date=substr(data$V1,1,11)
+library(lubridate)
+data$date2=dmy(data$date)
+data$date=gsub("1$","",data$date)
+data$date=gsub("2$","",data$date)
+data$date=gsub("3$","",data$date)
+data$date=gsub("0$","",data$date)
+data$date=gsub("44$","4",data$date)
+data$date2=dmy(data$date) #No error finally. It means all rows cleaned
+data=data[-3]
+data$weekday=weekdays(data$date2)
+data$V1=gsub("^[0-9]","",data$V1)
+data$V1=gsub("-","",data$V1)
+data$V1=gsub("[A-z]","",data$V1)
+data$V1=gsub("2014","",data$V1)
+data$V1=as.numeric(data$V1)
